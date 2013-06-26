@@ -38,7 +38,7 @@
     (goto-char beg)
     (cond
      ((save-excursion (search-forward "=>" end t))
-      (replace-regexp ":\\([a-zA-Z0-9_]+\\) +=> +" "\\1: " nil beg end))
+      (replace-regexp ":\\([a-zA-Z0-9_]+\\) *=> *" "\\1: " nil beg end))
      ((save-excursion (re-search-forward "\\w+:" end t))
       (replace-regexp "\\([a-zA-Z0-9_]+\\):\\( *\\(?:\"\\(?:\\\"\\|[^\"]\\)*\"\\|'\\(?:\\'\\|[^']\\)*'\\|[a-zA-Z0-9_]+([^)]*)\\|[^,]+\\)\\)" ":\\1 =>\\2" nil beg end)))))
 
