@@ -32,7 +32,7 @@
 
 ;;;###autoload
 (defun ruby-toggle-hash-syntax (beg end)
-  "Toggle syntax of selected ruby hash literal between ruby 1.8 and 1.9 styles."
+  "Toggle syntax of ruby hash literal in region from BEG to END between ruby 1.8 and 1.9 styles."
   (interactive "r")
   (save-excursion
     (goto-char beg)
