@@ -38,9 +38,16 @@
     (goto-char beg)
     (cond
      ((save-excursion (search-forward "=>" end t))
-      (replace-regexp ":\\([a-zA-Z0-9_]+\\) *=> *" "\\1: " nil beg end))
+        (while (re-search-forward ":\\([a-zA-Z0-9_]+\\) +=> +" end t)
+          (replace-match "\\1: ")
+          (beginning-of-line)))
      ((save-excursion (re-search-forward "\\w+:" end t))
-      (replace-regexp "\\([a-zA-Z0-9_]+\\):\\( *\\(?:\"\\(?:\\\"\\|[^\"]\\)*\"\\|'\\(?:\\'\\|[^']\\)*'\\|[a-zA-Z0-9_]+([^)]*)\\|[^,]+\\)\\)" ":\\1 =>\\2" nil beg end)))))
+      (let ((count 0) (change 3));; account for addition of characters
+        (while (re-search-forward "\\([a-zA-Z0-9_]+\\):\\( *\\(?:\"\\(?:\\\"\\|[^\"]\\)*\"\\|'\\(?:\\'\\|[^']\\)*'\\|[a-zA-Z0-9_]+([^)]*)\\|[^,\\n]+\\)\\)"
+                                  (+ end (* change count)) t)
+          (replace-match ":\\1 =>\\2")
+          (setq count (+ count 1))
+          (beginning-of-line)))))))
 
 
 (provide 'ruby-hash-syntax)
