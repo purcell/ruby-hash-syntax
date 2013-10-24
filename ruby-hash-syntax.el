@@ -35,12 +35,18 @@
   "Toggle syntax of ruby hash literal in region from BEG to END between ruby 1.8 and 1.9 styles."
   (interactive "r")
   (save-excursion
-    (goto-char beg)
-    (cond
-     ((save-excursion (search-forward "=>" end t))
-      (replace-regexp ":\\([a-zA-Z0-9_]+\\) *=> *" "\\1: " nil beg end))
-     ((save-excursion (re-search-forward "\\w+:" end t))
-      (replace-regexp "\\([a-zA-Z0-9_]+\\):\\( *\\(?:\"\\(?:\\\"\\|[^\"]\\)*\"\\|'\\(?:\\'\\|[^']\\)*'\\|[a-zA-Z0-9_]+([^)]*)\\|[^,]+\\)\\)" ":\\1 =>\\2" nil beg end)))))
+    (let ((limit (copy-marker (max beg end))))
+      (goto-char (min beg end))
+      (cond
+       ((save-excursion (search-forward "=>" limit t))
+        (ruby-hash-syntax--replace ":\\([a-zA-Z0-9_]+\\) *=> *" "\\1: " limit))
+       ((save-excursion (re-search-forward "\\w+:" limit t))
+        (ruby-hash-syntax--replace "\\([a-zA-Z0-9_]+\\):\\( *\\(?:\"\\(?:\\\"\\|[^\"]\\)*\"\\|'\\(?:\\'\\|[^']\\)*'\\|[a-zA-Z0-9_]+([^)]*)\\|[^,]+\\)\\)" ":\\1 =>\\2" limit))))))
+
+(defun ruby-hash-syntax--replace (from to end)
+  "Replace FROM with TO up to END."
+  (while (re-search-forward from end t)
+    (replace-match to nil nil)))
 
 
 (provide 'ruby-hash-syntax)
