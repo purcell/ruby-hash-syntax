@@ -38,10 +38,22 @@
     (let ((limit (copy-marker (max beg end))))
       (goto-char (min beg end))
       (cond
-       ((save-excursion (search-forward "=>" limit t))
+       ((ruby-hash-syntax--code-has-pattern "=>" limit)
         (ruby-hash-syntax--replace ":\\([a-zA-Z0-9_]+\\) *=> *" "\\1: " limit))
-       ((save-excursion (re-search-forward "\\w+:" limit t))
+       ((ruby-hash-syntax--code-has-pattern "\\w+:" limit)
         (ruby-hash-syntax--replace "\\([a-zA-Z0-9_]+\\):\\( *\\(?:\"\\(?:\\\"\\|[^\"]\\)*\"\\|'\\(?:\\'\\|[^']\\)*'\\|[a-zA-Z0-9_]+([^)]*)\\|[^,]+\\)\\)" ":\\1 =>\\2" limit))))))
+
+(defun ruby-hash-syntax--code-has-pattern (pat limit)
+  "A version of `search-forward' which skips over string literals.
+Argument PAT is the search patter, while LIMIT is the maximum
+search extent."
+  (let (found)
+    (save-excursion
+      (while (and (not found) (re-search-forward pat limit t))
+        (unless (elt (syntax-ppss) 3)
+          ;; If this isn't inside a string...
+          (setq found t))))
+    found))
 
 (defun ruby-hash-syntax--replace (from to end)
   "Replace FROM with TO up to END."
