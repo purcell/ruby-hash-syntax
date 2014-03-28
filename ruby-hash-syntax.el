@@ -1,6 +1,6 @@
 ;;; ruby-hash-syntax.el --- Toggle ruby hash syntax between classic and 1.9 styles
 
-;; Copyright (C) 2013  Steve Purcell
+;; Copyright (C) 2013-2014  Steve Purcell
 
 ;; Author: Steve Purcell <steve@sanityinc.com>
 ;; Version: DEV
