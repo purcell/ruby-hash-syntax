@@ -34,6 +34,8 @@
 (defun ruby-toggle-hash-syntax (beg end)
   "Toggle syntax of ruby hash literal in region from BEG to END between ruby 1.8 and 1.9 styles."
   (interactive "r")
+  (unless (use-region-p)
+    (error "The region is not active"))
   (save-excursion
     (let ((limit (copy-marker (max beg end))))
       (goto-char (min beg end))
