@@ -49,13 +49,12 @@
   "A version of `search-forward' which skips over string literals.
 Argument PAT is the search patter, while LIMIT is the maximum
 search extent."
-  (let (found)
+  (catch 'found
     (save-excursion
-      (while (and (not found) (re-search-forward pat limit t))
+      (while (re-search-forward pat limit t)
         (unless (elt (syntax-ppss) 3)
           ;; If this isn't inside a string...
-          (setq found t))))
-    found))
+          (throw 'found t))))))
 
 (defun ruby-hash-syntax--replace (from to end)
   "Replace FROM with TO up to END."
