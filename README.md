@@ -1,5 +1,5 @@
-[![Melpa Status](http://melpa.milkbox.net/packages/ruby-hash-syntax-badge.svg)](http://melpa.milkbox.net/#/ruby-hash-syntax)
-[![Melpa Stable Status](http://melpa-stable.milkbox.net/packages/ruby-hash-syntax-badge.svg)](http://melpa-stable.milkbox.net/#/ruby-hash-syntax)
+[![Melpa Status](http://melpa.org/packages/ruby-hash-syntax-badge.svg)](http://melpa.org/#/ruby-hash-syntax)
+[![Melpa Stable Status](http://stable.melpa.org/packages/ruby-hash-syntax-badge.svg)](http://stable.melpa.org/#/ruby-hash-syntax)
 
 ruby-hash-syntax.el
 ===================
@@ -31,7 +31,7 @@ using `mark-sexp`), and run the `ruby-toggle-hash-syntax` command:
 You might like to bind that command to a key in `ruby-mode-map`.
 
 [marmalade]: http://marmalade-repo.org
-[melpa]: http://melpa.milkbox.net
+[melpa]: http://melpa.org
 
 <hr>
 
