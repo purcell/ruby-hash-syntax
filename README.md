@@ -12,7 +12,7 @@ Installation
 =============
 
 If you choose not to use one of the convenient packages in
-[Melpa][melpa] and [Marmalade][marmalade], you'll need to add the
+[MELPA][melpa], you'll need to add the
 directory containing `ruby-hash-syntax.el` to your `load-path`, and then
 `(require 'ruby-hash-syntax)`.
 
@@ -30,7 +30,6 @@ using `mark-sexp`), and run the `ruby-toggle-hash-syntax` command:
 
 You might like to bind that command to a key in `ruby-mode-map`.
 
-[marmalade]: http://marmalade-repo.org
 [melpa]: http://melpa.org
 
 <hr>
