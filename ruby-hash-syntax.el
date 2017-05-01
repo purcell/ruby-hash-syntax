@@ -45,6 +45,14 @@
        ((ruby-hash-syntax--code-has-pattern "\\w+:" limit)
         (ruby-hash-syntax--replace "\\([a-zA-Z0-9_]+\\):\\( *\\(?:\"\\(?:\\\"\\|[^\"]\\)*\"\\|'\\(?:\\'\\|[^']\\)*'\\|[a-zA-Z0-9_]+([^)]*)\\|[^,]+\\)\\)" ":\\1 =>\\2" limit))))))
 
+(defun ruby-smart-toggle-hash-syntax ()
+  (interactive)
+  (save-excursion
+    (backward-up-list)
+    (push-mark (point) t t)
+    (forward-list)
+    (ruby-toggle-hash-syntax (region-beginning) (region-end))))
+
 (defun ruby-hash-syntax--code-has-pattern (pat limit)
   "A version of `search-forward' which skips over string literals.
 Argument PAT is the search patter, while LIMIT is the maximum

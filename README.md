@@ -28,6 +28,8 @@ using `mark-sexp`), and run the `ruby-toggle-hash-syntax` command:
 
     M-x ruby-toggle-hash-syntax
 
+You can also run `ruby-smart-toggle-hash-syntax` to change the hash under the cursor.
+
 You might like to bind that command to a key in `ruby-mode-map`.
 
 [melpa]: http://melpa.org
