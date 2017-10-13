@@ -31,7 +31,7 @@
 ;; Borrowed from https://github.com/textmate/ruby.tmbundle/blob/master/Commands/Convert%20Ruby%20hash%20to%201_9%20syntax.tmCommand
 
 ;;;###autoload
-(defun ruby-toggle-hash-syntax (beg end)
+(defun ruby-hash-syntax-toggle (beg end)
   "Toggle syntax of ruby hash literal in region from BEG to END between ruby 1.8 and 1.9 styles."
   (interactive "r")
   (unless (use-region-p)
@@ -45,6 +45,9 @@
         (ruby-hash-syntax--replace hashrocket-pattern "\\1: " limit))
        ((ruby-hash-syntax--code-has-pattern "\\w+:" limit)
         (ruby-hash-syntax--replace "\\([a-zA-Z0-9_]+\\):\\( *\\(?:\"\\(?:\\\"\\|[^\"]\\)*\"\\|'\\(?:\\'\\|[^']\\)*'\\|[a-zA-Z0-9_]+([^)]*)\\|[^,]+\\)\\)" ":\\1 =>\\2" limit))))))
+
+;;;###autoload
+(define-obsolete-function-alias 'ruby-toggle-hash-syntax 'ruby-hash-syntax-toggle)
 
 (defun ruby-hash-syntax--code-has-pattern (pat limit)
   "A version of `search-forward' which skips over string literals.
