@@ -6,7 +6,7 @@ ruby-hash-syntax.el
 ===================
 
 Adapted from the method used by TextMate, this library provides
-a command `ruby-toggle-hash-syntax` which attempts to automatically
+a command `ruby-hash-syntax-toggle` which attempts to automatically
 convert the selected region of ruby code between 1.8 and 1.9 hash styles.
 
 Installation
@@ -25,9 +25,9 @@ Add the following to your emacs init file:
     (require 'ruby-hash-syntax)
 
 Then select a block of ruby code containing a hash literal (perhaps
-using `mark-sexp`), and run the `ruby-toggle-hash-syntax` command:
+using `mark-sexp`), and run the `ruby-hash-syntax-toggle` command:
 
-    M-x ruby-toggle-hash-syntax
+    M-x ruby-hash-syntax-toggle
 
 You might like to bind that command to a key in `ruby-mode-map`.
 
