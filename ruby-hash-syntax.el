@@ -38,11 +38,11 @@
     (error "The region is not active"))
   (save-excursion
     (let ((limit (copy-marker (max beg end)))
-          (hashrocket-pattern "[^:]:\\([a-zA-Z0-9_]+\\) *=> *"))
+          (hashrocket-pattern "\\([^:]\\):\\([a-zA-Z0-9_]+\\) *=> *"))
       (goto-char (min beg end))
       (cond
        ((ruby-hash-syntax--code-has-pattern hashrocket-pattern limit)
-        (ruby-hash-syntax--replace hashrocket-pattern "\\1: " limit))
+        (ruby-hash-syntax--replace hashrocket-pattern "\\1\\2: " limit))
        ((ruby-hash-syntax--code-has-pattern "\\w+:" limit)
         (ruby-hash-syntax--replace "\\([a-zA-Z0-9_]+\\):\\( *\\(?:\"\\(?:\\\"\\|[^\"]\\)*\"\\|'\\(?:\\'\\|[^']\\)*'\\|[a-zA-Z0-9_]+([^)]*)\\|[^,]+\\)\\)" ":\\1 =>\\2" limit))))))
 
