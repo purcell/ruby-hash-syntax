@@ -1,4 +1,4 @@
-;;; ruby-hash-syntax.el --- Toggle ruby hash syntax between classic and 1.9 styles
+;;; ruby-hash-syntax.el --- Toggle ruby hash syntax between => and 1.9+ styles
 
 ;; Copyright (C) 2013-2017  Steve Purcell
 
