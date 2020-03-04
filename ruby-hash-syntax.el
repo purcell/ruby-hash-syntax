@@ -1,9 +1,10 @@
-;;; ruby-hash-syntax.el --- Toggle ruby hash syntax between => and 1.9+ styles
+;;; ruby-hash-syntax.el --- Toggle ruby hash syntax between => and 1.9+ styles  -*- lexical-binding: t -*-
 
-;; Copyright (C) 2013-2017  Steve Purcell
+;; Copyright (C) 2013-2020  Steve Purcell
 
 ;; Author: Steve Purcell <steve@sanityinc.com>
 ;; Package-Version: 0
+;; Package-Requires: ((emacs "24.1"))
 ;; URL: https://github.com/purcell/ruby-hash-syntax
 ;; Keywords: languages
 
