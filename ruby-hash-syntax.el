@@ -47,8 +47,6 @@
        ((ruby-hash-syntax--code-has-pattern "\\w+:" limit)
         (ruby-hash-syntax--replace "\\([a-zA-Z0-9_]+\\):\\( *\\(?:\"\\(?:\\\"\\|[^\"]\\)*\"\\|'\\(?:\\'\\|[^']\\)*'\\|[a-zA-Z0-9_]+([^)]*)\\|[^,]+\\)\\)" ":\\1 =>\\2" limit))))))
 
-;;;###autoload
-(define-obsolete-function-alias 'ruby-toggle-hash-syntax 'ruby-hash-syntax-toggle)
 
 (defun ruby-hash-syntax--code-has-pattern (pat limit)
   "A version of `search-forward' which skips over string literals.
