@@ -31,9 +31,10 @@
 
 ;; Borrowed from https://github.com/textmate/ruby.tmbundle/blob/master/Commands/Convert%20Ruby%20hash%20to%201_9%20syntax.tmCommand
 
-(require 'cl)
+(require 'pcase)
 
-(defvar-local ruby-hash-syntax--current-keys-type-toggle nil)
+(defvar ruby-hash-syntax--current-keys-type-toggle nil)
+(make-variable-buffer-local 'ruby-hash-syntax--current-keys-type-toggle)
 
 ;;;###autoload
 (defun ruby-hash-syntax-toggle (beg end)
@@ -75,9 +76,9 @@ The keys are toggled between symbol, single quotes and double quotes strings."
         (ruby-hash-syntax--toggle-symbol-keys symbol-pattern limit))))))
 
 (defun ruby-hash-syntax--toggle-symbol-keys (pat limit)
-  "Toggles keys type from Symbol type to String type.
+  "Toggle keys type from Symbol type to String type.
 The PAT and LIMIT parameters will used when calling `ruby-hash-syntax--replace'."
-  (cl-case ruby-hash-syntax--current-keys-type-toggle
+  (pcase ruby-hash-syntax--current-keys-type-toggle
     ('double-quotes
      (progn
        (ruby-hash-syntax--replace pat "\\1'\\2' =>\\3" limit)
