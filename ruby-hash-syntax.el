@@ -61,16 +61,16 @@ The keys are toggled between symbol, single quotes and double quotes strings."
     (error "The region is not active"))
   (save-excursion
     (let ((limit (copy-marker (max beg end)))
-          (hashrocket-single-quotes-pattern "\\([^']?\\)'\\([a-zA-Z0-9_]+\\)'\\( *\\)=>\\( *\\)")
-          (hashrocket-double-quotes-pattern "\\([^\"]?\\)\"\\([a-zA-Z0-9_]+\\)\"\\( *\\)=>\\( *\\)")
+          (hashrocket-single-quotes-pattern "\\([^']?\\)'\\([a-zA-Z0-9_]+\\)' *=>\\( *\\)")
+          (hashrocket-double-quotes-pattern "\\([^\"]?\\)\"\\([a-zA-Z0-9_]+\\)\" *=>\\( *\\)")
           (symbol-pattern                   "\\( *\\)\\([^ :]+\\):\\( *\\)"))
       (goto-char (min beg end))
       (cond
        ((ruby-hash-syntax--code-has-pattern hashrocket-single-quotes-pattern limit)
-        (ruby-hash-syntax--replace          hashrocket-single-quotes-pattern "\\1\\2:\\3\\4" limit))
+        (ruby-hash-syntax--replace          hashrocket-single-quotes-pattern "\\1\\2:\\3" limit))
 
        ((ruby-hash-syntax--code-has-pattern hashrocket-double-quotes-pattern limit)
-        (ruby-hash-syntax--replace          hashrocket-double-quotes-pattern "\\1\\2:\\3\\4" limit))
+        (ruby-hash-syntax--replace          hashrocket-double-quotes-pattern "\\1\\2:\\3" limit))
 
        ((ruby-hash-syntax--code-has-pattern symbol-pattern limit)
         (ruby-hash-syntax--toggle-symbol-keys symbol-pattern limit))))))
