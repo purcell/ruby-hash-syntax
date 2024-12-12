@@ -31,6 +31,11 @@
 
 ;; Borrowed from https://github.com/textmate/ruby.tmbundle/blob/master/Commands/Convert%20Ruby%20hash%20to%201_9%20syntax.tmCommand
 
+(require 'pcase)
+
+(defvar ruby-hash-syntax--current-keys-type-toggle nil)
+(make-variable-buffer-local 'ruby-hash-syntax--current-keys-type-toggle)
+
 ;;;###autoload
 (defun ruby-hash-syntax-toggle (beg end)
   "Toggle syntax of ruby hash literal in region from BEG to END between ruby 1.8 and 1.9 styles."
@@ -47,6 +52,45 @@
        ((ruby-hash-syntax--code-has-pattern "\\w+:" limit)
         (ruby-hash-syntax--replace "\\([a-zA-Z0-9_]+\\):\\( *\\(?:\"\\(?:\\\"\\|[^\"]\\)*\"\\|'\\(?:\\'\\|[^']\\)*'\\|[a-zA-Z0-9_]+([^)]*)\\|[^,]+\\)\\)" ":\\1 =>\\2" limit))))))
 
+;;;###autoload
+(defun ruby-hash-syntax-toggle-key-type (beg end)
+  "Toggle keys type of ruby hash literal in region from BEG to END.
+The keys are toggled between symbol, single quotes and double quotes strings."
+  (interactive "r")
+  (unless (use-region-p)
+    (error "The region is not active"))
+  (save-excursion
+    (let ((limit (copy-marker (max beg end)))
+          (hashrocket-single-quotes-pattern "\\([^']?\\)'\\([a-zA-Z0-9_]+\\)' *=>\\( *\\)")
+          (hashrocket-double-quotes-pattern "\\([^\"]?\\)\"\\([a-zA-Z0-9_]+\\)\" *=>\\( *\\)")
+          (symbol-pattern                   "\\( *\\)\\([^ :]+\\):\\( *\\)"))
+      (goto-char (min beg end))
+      (cond
+       ((ruby-hash-syntax--code-has-pattern hashrocket-single-quotes-pattern limit)
+        (ruby-hash-syntax--replace          hashrocket-single-quotes-pattern "\\1\\2:\\3" limit))
+
+       ((ruby-hash-syntax--code-has-pattern hashrocket-double-quotes-pattern limit)
+        (ruby-hash-syntax--replace          hashrocket-double-quotes-pattern "\\1\\2:\\3" limit))
+
+       ((ruby-hash-syntax--code-has-pattern symbol-pattern limit)
+        (ruby-hash-syntax--toggle-symbol-keys symbol-pattern limit))))))
+
+(defun ruby-hash-syntax--toggle-symbol-keys (pat limit)
+  "Toggle keys type from Symbol type to String type.
+The PAT and LIMIT parameters will used when calling `ruby-hash-syntax--replace'."
+  (pcase ruby-hash-syntax--current-keys-type-toggle
+    ('double-quotes
+     (progn
+       (ruby-hash-syntax--replace pat "\\1'\\2' =>\\3" limit)
+       (setq ruby-hash-syntax--current-keys-type-toggle 'single-quotes)))
+    ('single-quotes
+     (progn
+       (ruby-hash-syntax--replace pat "\\1\"\\2\" =>\\3" limit)
+       (setq ruby-hash-syntax--current-keys-type-toggle 'double-quotes)))
+    (t
+     (progn
+       (ruby-hash-syntax--replace pat "\\1'\\2' =>\\3" limit)
+       (setq ruby-hash-syntax--current-keys-type-toggle 'double-quotes)))))
 
 (defun ruby-hash-syntax--code-has-pattern (pat limit)
   "A version of `search-forward' which skips over string literals.
